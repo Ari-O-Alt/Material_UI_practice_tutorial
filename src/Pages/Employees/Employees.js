@@ -17,6 +17,7 @@ import * as EmployeeService from '../../Services/employeeService';
 import MyInput from '../../Components/Controls/MyInput';
 import { Search } from '@material-ui/icons';
 import MyButton from '../../Components/Controls/MyButton';
+import MyPopup from '../../Components/MyPopup/MyPopup';
 
 const styles = makeStyles((theme) => ({
   pageContent: {
@@ -47,6 +48,7 @@ const Employees = () => {
 
   // we store the data from the local storage in the records state
   const [records, setRecords] = React.useState(tableBodyData);
+  const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
   const [filterFunction, setFilterFunction] = React.useState({
     fn: (items) => {
@@ -89,7 +91,6 @@ const Employees = () => {
         subtitle={'Form design validation'}
       />
       <Paper className={classes.pageContent}>
-        <EmployeeForm />
         <Toolbar>
           <MyInput
             className={classes.searchInput}
@@ -108,6 +109,7 @@ const Employees = () => {
             variant='outlined'
             startIcon={<AddIcon />}
             className={classes.addNewButton}
+            onClick={() => setIsPopupOpen(true)}
           />
         </Toolbar>
         <MyTableContainer>
@@ -127,6 +129,13 @@ const Employees = () => {
         </MyTableContainer>
         <MyTablePagination />
       </Paper>
+      <MyPopup
+        isPopupOpen={isPopupOpen}
+        title={'Add a new employee'}
+        setIsPopupOpen={setIsPopupOpen}
+      >
+        <EmployeeForm />
+      </MyPopup>
     </React.Fragment>
   );
 };
