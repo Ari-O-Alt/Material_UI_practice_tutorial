@@ -64,15 +64,19 @@ const useTable = (records, headCells, filterFunction) => {
                   columnToSort === headCell.id ? orderDirection : false
                 }
               >
-                <TableSortLabel
-                  active={columnToSort === headCell.id}
-                  direction={
-                    columnToSort === headCell.id ? orderDirection : 'asc'
-                  }
-                  onClick={() => handleSortRequest(headCell.id)}
-                >
-                  {headCell.label}
-                </TableSortLabel>
+                {headCell.disableSorting ? (
+                  headCell.label
+                ) : (
+                  <TableSortLabel
+                    active={columnToSort === headCell.id}
+                    direction={
+                      columnToSort === headCell.id ? orderDirection : 'asc'
+                    }
+                    onClick={() => handleSortRequest(headCell.id)}
+                  >
+                    {headCell.label}
+                  </TableSortLabel>
+                )}
               </TableCell>
             );
           })}
