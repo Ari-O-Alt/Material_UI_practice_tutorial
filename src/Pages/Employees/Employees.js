@@ -1,6 +1,7 @@
 import React from 'react';
 import EmployeeForm from './EmployeeForm';
 import PeopleIcon from '@material-ui/icons/People';
+import AddIcon from '@material-ui/icons/Add';
 import PageHeader from '../../Components/PageHeader/PageHeader';
 import {
   InputAdornment,
@@ -15,6 +16,7 @@ import useTable from '../../Components/useTable';
 import * as EmployeeService from '../../Services/employeeService';
 import MyInput from '../../Components/Controls/MyInput';
 import { Search } from '@material-ui/icons';
+import MyButton from '../../Components/Controls/MyButton';
 
 const styles = makeStyles((theme) => ({
   pageContent: {
@@ -23,6 +25,10 @@ const styles = makeStyles((theme) => ({
   },
   searchInput: {
     width: '75%',
+  },
+  addNewButton: {
+    position: 'absolute',
+    right: '10px',
   },
 }));
 
@@ -96,6 +102,12 @@ const Employees = () => {
               ),
             }}
             onChange={handleSearch}
+          />
+          <MyButton
+            text={'Add New'}
+            variant='outlined'
+            startIcon={<AddIcon />}
+            className={classes.addNewButton}
           />
         </Toolbar>
         <MyTableContainer>
