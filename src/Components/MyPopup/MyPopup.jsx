@@ -6,7 +6,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import React from 'react';
-import MyButton from '../Controls/MyButton';
+import MyActionButton from '../Controls/MyActionButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const styles = makeStyles((theme) => ({
   dialogWrapper: {
@@ -33,7 +34,9 @@ const MyPopup = (props) => {
           <Typography variant='h6' component={'div'} style={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <MyButton color='secondary' text='X'></MyButton>
+          <MyActionButton color='secondary'>
+            <CloseIcon />
+          </MyActionButton>
         </div>
       </DialogTitle>
       <DialogContent dividers>{children}</DialogContent>
