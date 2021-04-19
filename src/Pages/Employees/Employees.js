@@ -131,7 +131,7 @@ const Employees = () => {
       </Paper>
       <MyPopup
         isPopupOpen={isPopupOpen}
-        title={'Add a new employee'}
+        title={'Employee form'}
         setIsPopupOpen={setIsPopupOpen}
       >
         <EmployeeForm />
