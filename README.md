@@ -1,6 +1,6 @@
 # Getting Started with Create React App
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-It's using Material UI as a component library.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br/>
+I used Material UI as a component library.
 
 ## Available Scripts
 
