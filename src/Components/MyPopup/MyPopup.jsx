@@ -34,7 +34,10 @@ const MyPopup = (props) => {
           <Typography variant='h6' component={'div'} style={{ flexGrow: 1 }}>
             {title}
           </Typography>
-          <MyActionButton color='secondary'>
+          <MyActionButton
+            color='secondary'
+            onClick={() => setIsPopupOpen(false)}
+          >
             <CloseIcon />
           </MyActionButton>
         </div>

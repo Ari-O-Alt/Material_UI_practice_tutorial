@@ -85,13 +85,16 @@ const Employees = () => {
 
   return (
     <React.Fragment>
+      {/*   -------------------------------------------------------   page header */}
       <PageHeader
         icon={<PeopleIcon fontSize={'large'} />}
         title={'New employee'}
         subtitle={'Form design validation'}
       />
+      {/*   -------------------------------------------------------   the whole paper */}
       <Paper className={classes.pageContent}>
         <Toolbar>
+          {/*   -------------------------------------------------------   search input */}
           <MyInput
             className={classes.searchInput}
             label={'Search employees'}
@@ -104,6 +107,8 @@ const Employees = () => {
             }}
             onChange={handleSearch}
           />
+
+          {/*   -----------------------------------------   button that opens the popup */}
           <MyButton
             text={'Add New'}
             variant='outlined'
@@ -112,6 +117,8 @@ const Employees = () => {
             onClick={() => setIsPopupOpen(true)}
           />
         </Toolbar>
+
+        {/*   -------------------------------------------------------   table of employees */}
         <MyTableContainer>
           <MyTableHead />
           <TableBody>
@@ -129,6 +136,7 @@ const Employees = () => {
         </MyTableContainer>
         <MyTablePagination />
       </Paper>
+      {/* -------------------------------------------------------------------------  popup for adding employees */}
       <MyPopup
         isPopupOpen={isPopupOpen}
         title={'Employee form'}
