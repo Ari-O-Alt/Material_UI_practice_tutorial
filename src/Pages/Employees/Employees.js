@@ -2,6 +2,8 @@ import React from 'react';
 import EmployeeForm from './EmployeeForm';
 import PeopleIcon from '@material-ui/icons/People';
 import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
+import EditOutlinedIcon from '@material-ui/icons/Edit';
 import PageHeader from '../../Components/PageHeader/PageHeader';
 import {
   InputAdornment,
@@ -18,6 +20,7 @@ import MyInput from '../../Components/Controls/MyInput';
 import { Search } from '@material-ui/icons';
 import MyButton from '../../Components/Controls/MyButton';
 import MyPopup from '../../Components/MyPopup/MyPopup';
+import MyActionButton from '../../Components/Controls/MyActionButton';
 
 const styles = makeStyles((theme) => ({
   pageContent: {
@@ -38,6 +41,7 @@ const headCells = [
   { id: 'city', label: 'City' },
   { id: 'department', label: 'Department' },
   { id: 'phone', label: 'Phone number', disableSorting: true },
+  { id: 'actions', label: 'Actions', disableSorting: true },
 ];
 
 const Employees = () => {
@@ -142,6 +146,14 @@ const Employees = () => {
                   <TableCell>{record.city}</TableCell>
                   <TableCell>{record.department}</TableCell>
                   <TableCell>{record.mobile}</TableCell>
+                  <TableCell>
+                    <MyActionButton color={'primary'}>
+                      <EditOutlinedIcon fontSize={'small'} />
+                    </MyActionButton>
+                    <MyActionButton color={'secondary'}>
+                      <CloseIcon fontSize={'small'} />
+                    </MyActionButton>
+                  </TableCell>
                 </TableRow>
               );
             })}
