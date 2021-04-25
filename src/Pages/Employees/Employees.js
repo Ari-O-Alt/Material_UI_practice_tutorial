@@ -43,11 +43,10 @@ const headCells = [
 const Employees = () => {
   const classes = styles();
 
-  // we get all the data from the local storage
-  const tableBodyData = EmployeeService.getAllEmployees();
-
-  // we store the data from the local storage in the records state
-  const [records, setRecords] = React.useState(tableBodyData);
+  // we get the data from the local storage by calling a function; we then store it in the state
+  const [records, setRecords] = React.useState(
+    EmployeeService.getAllEmployees()
+  );
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
   const [filterFunction, setFilterFunction] = React.useState({
@@ -81,6 +80,20 @@ const Employees = () => {
         }
       },
     });
+  };
+
+  /**
+   *
+   * @param {*} employee the employee that needs to be added
+   * @param {*} resetForm the functon that will empty the form
+   * @param {*} setIsPopupOpen state set that will close the popup
+   * @param {*} setRecords function that will get the updated data to display in the table
+   */
+  const addOrEdit = (employee, resetForm) => {
+    EmployeeService.insertEmployee(employee);
+    resetForm();
+    setIsPopupOpen(false);
+    setRecords(EmployeeService.getAllEmployees());
   };
 
   return (
@@ -142,7 +155,7 @@ const Employees = () => {
         title={'Employee form'}
         setIsPopupOpen={setIsPopupOpen}
       >
-        <EmployeeForm />
+        <EmployeeForm addOrEdit={addOrEdit} />
       </MyPopup>
     </React.Fragment>
   );

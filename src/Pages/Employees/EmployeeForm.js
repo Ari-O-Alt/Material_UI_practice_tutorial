@@ -27,7 +27,9 @@ const initialFormFieldsValues = {
   isPermanent: false,
 };
 
-const EmployeeForm = () => {
+const EmployeeForm = (props) => {
+  const { addOrEdit } = props;
+
   // method for form validation - real time validation for single inputs
   // we pass it the values object wich stores all the inout values at that point in time
   const validateForm = (fieldValues = values) => {
@@ -35,16 +37,24 @@ const EmployeeForm = () => {
     // if a specific props exists inside our fieldValues object, we check if it hold any value
     // if it does, we have no error, if it doesn't, we have an error message
     if ('fullName' in fieldValues) {
-      possibleErrors.fullName = fieldValues.fullName ? '' : 'Please enter a name';
+      possibleErrors.fullName = fieldValues.fullName
+        ? ''
+        : 'Please enter a name';
     }
     if ('email' in fieldValues) {
-      possibleErrors.email = /$^|.+@.+..+/.test(fieldValues.email) ? '' : 'Email is not valid';
+      possibleErrors.email = /$^|.+@.+..+/.test(fieldValues.email)
+        ? ''
+        : 'Email is not valid';
     }
     if ('mobile' in fieldValues) {
-      possibleErrors.mobile = fieldValues.mobile.length > 9 ? '' : 'Minimum 10 digits are required for the phone number';
+      possibleErrors.mobile =
+        fieldValues.mobile.length > 9
+          ? ''
+          : 'Minimum 10 digits are required for the phone number';
     }
     if ('departmentId' in fieldValues) {
-      possibleErrors.departmentId = fieldValues.departmentId.length !== 0 ? '' : 'Please enter a value';
+      possibleErrors.departmentId =
+        fieldValues.departmentId.length !== 0 ? '' : 'Please enter a value';
     }
 
     // we set all the errors in our error state
@@ -56,7 +66,11 @@ const EmployeeForm = () => {
     /*  } */
   };
 
-  const { values, handleInputChange, errors, setErrors, resetForm } = useForm(initialFormFieldsValues, true, validateForm);
+  const { values, handleInputChange, errors, setErrors, resetForm } = useForm(
+    initialFormFieldsValues,
+    true,
+    validateForm
+  );
 
   const departmentOptions = EmployeeService.getDepartmentCollection();
 
@@ -65,8 +79,7 @@ const EmployeeForm = () => {
     if (validateForm()) {
       // if this function returns true, therefore the form is error free, submit the form
       window.alert('Hello!');
-      EmployeeService.insertEmployee(values);
-      resetForm();
+      addOrEdit(values, resetForm);
     }
   };
 
@@ -78,24 +91,70 @@ const EmployeeForm = () => {
         {/* ---------------------------------------------------------- left side of the  grid */}
         <Grid item={true} xs={6}>
           {/* -------------------- name input */}
-          <MyInput name='fullName' label={'Full Name'} value={values.fullName} onHandleChange={handleInputChange} error={errors.fullName} />
+          <MyInput
+            name='fullName'
+            label={'Full Name'}
+            value={values.fullName}
+            onHandleChange={handleInputChange}
+            error={errors.fullName}
+          />
           {/* -------------------- email input */}
-          <MyInput label={'Email'} name='email' value={values.email} onHandleChange={handleInputChange} error={errors.email} />
+          <MyInput
+            label={'Email'}
+            name='email'
+            value={values.email}
+            onHandleChange={handleInputChange}
+            error={errors.email}
+          />
           {/* -------------------- mobile input */}
-          <MyInput label={'Mobile'} name='mobile' value={values.mobile} onHandleChange={handleInputChange} error={errors.mobile} />
+          <MyInput
+            label={'Mobile'}
+            name='mobile'
+            value={values.mobile}
+            onHandleChange={handleInputChange}
+            error={errors.mobile}
+          />
           {/* -------------------- city input */}
-          <MyInput label={'City'} name='city' value={values.city} onHandleChange={handleInputChange} />
+          <MyInput
+            label={'City'}
+            name='city'
+            value={values.city}
+            onHandleChange={handleInputChange}
+          />
         </Grid>
         {/* ---------------------------------------------------------- right side of the  grid */}
         <Grid item={true} xs={6}>
           {/* -------------------- gender input */}
-          <MyRadioGroup name='gender' label='Gender' value={values.gender} onHandleChange={handleInputChange} genderItems={genderItems} />
+          <MyRadioGroup
+            name='gender'
+            label='Gender'
+            value={values.gender}
+            onHandleChange={handleInputChange}
+            genderItems={genderItems}
+          />
           {/* -------------------- department dropdown */}
-          <MyDropdownMenu name='departmentId' label='Department' value={values.departmentId} onHandleChange={handleInputChange} options={departmentOptions} error={errors.departmentId} />
+          <MyDropdownMenu
+            name='departmentId'
+            label='Department'
+            value={values.departmentId}
+            onHandleChange={handleInputChange}
+            options={departmentOptions}
+            error={errors.departmentId}
+          />
           {/* -------------------- date picker */}
-          <MyDatePicker name='hireDate' label='Date Picker' value={values.hireDate} onHandleChange={handleInputChange} />
+          <MyDatePicker
+            name='hireDate'
+            label='Date Picker'
+            value={values.hireDate}
+            onHandleChange={handleInputChange}
+          />
           {/* -------------------- is permanent checkbox */}
-          <MyCheckbox value={values.isPermanent} name='isPermanent' label='Is Permanent Employee' onHandleChange={handleInputChange} />
+          <MyCheckbox
+            value={values.isPermanent}
+            name='isPermanent'
+            label='Is Permanent Employee'
+            onHandleChange={handleInputChange}
+          />
           {/* -------------------- submit and reset buttons */}
           <div>
             <MyButton text='SUBMIT' type='submit' />
