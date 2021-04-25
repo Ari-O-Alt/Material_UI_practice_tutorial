@@ -21,6 +21,7 @@ import { Search } from '@material-ui/icons';
 import MyButton from '../../Components/Controls/MyButton';
 import MyPopup from '../../Components/MyPopup/MyPopup';
 import MyActionButton from '../../Components/Controls/MyActionButton';
+import MyNotificatonPopup from '../../Components/MyNotificationPopup/MyNotificatonPopup';
 
 const styles = makeStyles((theme) => ({
   pageContent: {
@@ -58,6 +59,11 @@ const Employees = () => {
       return items;
     },
   });
+  const [notify, setNotify] = React.useState({
+    isOpen: false,
+    message: '',
+    type: '',
+  });
 
   const {
     MyTableContainer,
@@ -87,7 +93,7 @@ const Employees = () => {
   };
 
   /**
-   *
+   * Function that adds or edits an employee
    * @param {*} employee the employee that needs to be added
    * @param {*} resetForm the functon that will empty the form
    * @param {*} setIsPopupOpen state set that will close the popup
@@ -106,11 +112,38 @@ const Employees = () => {
     setRecordForEdit(null);
     setIsPopupOpen(false);
     setRecords(EmployeeService.getAllEmployees());
+    setNotify({
+      isOpen: true,
+      message: 'Submitted Successfully',
+      type: 'success',
+    });
   };
 
   const openInPopup = (itemToEdit) => {
     setRecordForEdit(itemToEdit);
     setIsPopupOpen(true);
+  };
+
+  const onClickAddNewEmployee = () => {
+    setIsPopupOpen(true);
+    setRecordForEdit(null);
+  };
+
+  /**
+   * Function that deletes an employee based on its id
+   * @param {*} itemId
+   */
+  const handleDeleteEmployee = (itemId) => {
+    // we delete the targeted employee
+    EmployeeService.deleteEmployee(itemId);
+    // we update the UI by updating the state storing the employees
+    setRecords(EmployeeService.getAllEmployees());
+    // we show a notification
+    setNotify({
+      isOpen: true,
+      message: 'Employee Deleted Successfully',
+      type: 'success',
+    });
   };
 
   return (
@@ -144,7 +177,7 @@ const Employees = () => {
             variant='outlined'
             startIcon={<AddIcon />}
             className={classes.addNewButton}
-            onClick={() => setIsPopupOpen(true)}
+            onClick={onClickAddNewEmployee}
           />
         </Toolbar>
 
@@ -166,7 +199,10 @@ const Employees = () => {
                         onClick={() => openInPopup(record)}
                       />
                     </MyActionButton>
-                    <MyActionButton color={'secondary'}>
+                    <MyActionButton
+                      color={'secondary'}
+                      onClick={() => handleDeleteEmployee(record.id)}
+                    >
                       <CloseIcon fontSize={'small'} />
                     </MyActionButton>
                   </TableCell>
@@ -185,6 +221,11 @@ const Employees = () => {
       >
         <EmployeeForm addOrEdit={addOrEdit} recordForEdit={recordForEdit} />
       </MyPopup>
+      {/* -------------------------------------------------------------------------  the notification popup */}
+      <MyNotificatonPopup
+        notify={notify}
+        setNotify={setNotify}
+      ></MyNotificatonPopup>
     </React.Fragment>
   );
 };

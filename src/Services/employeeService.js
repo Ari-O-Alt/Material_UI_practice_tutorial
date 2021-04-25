@@ -41,6 +41,15 @@ export const updateEmployee = (submittedFormData) => {
 };
 
 /**
+ * Function that deletes an employee from the local storage
+ */
+export const deleteEmployee = (idToDelete) => {
+  let employees = getAllEmployees();
+  employees = employees.filter((employee) => employee.id !== idToDelete);
+  localStorage.setItem(KEYS.employees, JSON.stringify(employees));
+};
+
+/**
  * Function to generate an exmployee id
  */
 export const generateEmployeeId = () => {
