@@ -28,7 +28,7 @@ const initialFormFieldsValues = {
 };
 
 const EmployeeForm = (props) => {
-  const { addOrEdit } = props;
+  const { addOrEdit, recordForEdit } = props;
 
   // method for form validation - real time validation for single inputs
   // we pass it the values object wich stores all the inout values at that point in time
@@ -66,11 +66,14 @@ const EmployeeForm = (props) => {
     /*  } */
   };
 
-  const { values, handleInputChange, errors, setErrors, resetForm } = useForm(
-    initialFormFieldsValues,
-    true,
-    validateForm
-  );
+  const {
+    values,
+    setValues,
+    handleInputChange,
+    errors,
+    setErrors,
+    resetForm,
+  } = useForm(initialFormFieldsValues, true, validateForm);
 
   const departmentOptions = EmployeeService.getDepartmentCollection();
 
@@ -82,6 +85,12 @@ const EmployeeForm = (props) => {
       addOrEdit(values, resetForm);
     }
   };
+
+  React.useEffect(() => {
+    if (recordForEdit !== null) {
+      setValues({ ...recordForEdit });
+    }
+  }, [recordForEdit, setValues]);
 
   return (
     /*-------------------------------------------------------------------------------- form start */

@@ -28,6 +28,19 @@ export const insertEmployee = (submittedFormData) => {
 };
 
 /**
+ *
+ * Function to update employees in the local storage
+ */
+export const updateEmployee = (submittedFormData) => {
+  let employees = getAllEmployees();
+  let recordToUpdateIndex = employees.findIndex(
+    (record) => record.id === submittedFormData.id
+  );
+  employees[recordToUpdateIndex] = { ...submittedFormData };
+  localStorage.setItem(KEYS.employees, JSON.stringify(employees));
+};
+
+/**
  * Function to generate an exmployee id
  */
 export const generateEmployeeId = () => {

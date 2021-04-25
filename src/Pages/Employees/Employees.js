@@ -46,7 +46,7 @@ const headCells = [
 
 const Employees = () => {
   const classes = styles();
-
+  const [recordForEdit, setRecordForEdit] = React.useState(null);
   // we get the data from the local storage by calling a function; we then store it in the state
   const [records, setRecords] = React.useState(
     EmployeeService.getAllEmployees()
@@ -94,10 +94,23 @@ const Employees = () => {
    * @param {*} setRecords function that will get the updated data to display in the table
    */
   const addOrEdit = (employee, resetForm) => {
-    EmployeeService.insertEmployee(employee);
+    if (employee.id === 0) {
+      // if id === 0 it means it's a new employee
+      EmployeeService.insertEmployee(employee);
+    } else {
+      // else it means it's an already existing employee and we just need to update it
+      EmployeeService.updateEmployee(employee);
+    }
+
     resetForm();
+    setRecordForEdit(null);
     setIsPopupOpen(false);
     setRecords(EmployeeService.getAllEmployees());
+  };
+
+  const openInPopup = (itemToEdit) => {
+    setRecordForEdit(itemToEdit);
+    setIsPopupOpen(true);
   };
 
   return (
@@ -148,7 +161,10 @@ const Employees = () => {
                   <TableCell>{record.mobile}</TableCell>
                   <TableCell>
                     <MyActionButton color={'primary'}>
-                      <EditOutlinedIcon fontSize={'small'} />
+                      <EditOutlinedIcon
+                        fontSize={'small'}
+                        onClick={() => openInPopup(record)}
+                      />
                     </MyActionButton>
                     <MyActionButton color={'secondary'}>
                       <CloseIcon fontSize={'small'} />
@@ -167,7 +183,7 @@ const Employees = () => {
         title={'Employee form'}
         setIsPopupOpen={setIsPopupOpen}
       >
-        <EmployeeForm addOrEdit={addOrEdit} />
+        <EmployeeForm addOrEdit={addOrEdit} recordForEdit={recordForEdit} />
       </MyPopup>
     </React.Fragment>
   );
