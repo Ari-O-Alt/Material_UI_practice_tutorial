@@ -20,10 +20,18 @@ const useStyles = makeStyles((theme) => ({
       opacity: '.6',
     },
   },
+  instructions: {
+    justifyContent: 'flex-end',
+    marginLeft: 'auto',
+    maxWidth: '60%',
+    '& .MuiTypography-subtitle1': {
+      opacity: '.6',
+    },
+  },
 }));
 
 const PageHeader = (props) => {
-  const { icon, title, subtitle } = props;
+  const { icon, title, subtitle, titleInstructions, bodyInstructions } = props;
   const classes = useStyles();
   return (
     <Paper elevation={1} square={true} className={classes.root}>
@@ -31,12 +39,22 @@ const PageHeader = (props) => {
         <Card square={true} className={classes.headerIcon}>
           {icon}
         </Card>
+        {/*  ------------------------------------------------------------------ title + subtitle */}
         <div className={classes.headerTitle}>
           <Typography variant='h6' component='div'>
             {title}
           </Typography>
           <Typography variant='subtitle2' component='div'>
             {subtitle}
+          </Typography>
+        </div>
+        {/*  ------------------------------------------------------------------------- instructions */}
+        <div className={classes.instructions}>
+          <Typography variant='h6' component='div'>
+            {titleInstructions}
+          </Typography>
+          <Typography variant='subtitle1' component='div'>
+            {bodyInstructions}
           </Typography>
         </div>
       </div>

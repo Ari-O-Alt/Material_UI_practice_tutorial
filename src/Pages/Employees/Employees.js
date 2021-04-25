@@ -163,6 +163,10 @@ const Employees = () => {
         icon={<PeopleIcon fontSize={'large'} />}
         title={'New employee'}
         subtitle={'Form design validation'}
+        titleInstructions={'HOW TO USE THIS FORM'}
+        bodyInstructions={
+          'You can add new employees, delete and edit already existing ones. The table has sorting capabilities and can display up to 25 employees on the page. All the data you add to the table gets stored in the local storage of the browser.'
+        }
       />
       {/*   -------------------------------------------------------   the whole paper */}
       <Paper className={classes.pageContent}>
