@@ -22,6 +22,7 @@ import MyButton from '../../Components/Controls/MyButton';
 import MyPopup from '../../Components/MyPopup/MyPopup';
 import MyActionButton from '../../Components/Controls/MyActionButton';
 import MyNotificatonPopup from '../../Components/MyNotificationPopup/MyNotificatonPopup';
+import MyConfirmDialog from '../../Components/MyConfirmDialog/MyConfirmDialog';
 
 const styles = makeStyles((theme) => ({
   pageContent: {
@@ -63,6 +64,11 @@ const Employees = () => {
     isOpen: false,
     message: '',
     type: '',
+  });
+  const [confirmDialog, setConfirmDialog] = React.useState({
+    title: '',
+    subtitle: '',
+    isOpen: false,
   });
 
   const {
@@ -133,16 +139,20 @@ const Employees = () => {
    * Function that deletes an employee based on its id
    * @param {*} itemId
    */
-  const handleDeleteEmployee = (itemId) => {
+  const handleDeleteEmployee = (idToDelete) => {
+    setConfirmDialog({
+      ...confirmDialog,
+      isOpen: false,
+    });
     // we delete the targeted employee
-    EmployeeService.deleteEmployee(itemId);
+    EmployeeService.deleteEmployee(idToDelete);
     // we update the UI by updating the state storing the employees
     setRecords(EmployeeService.getAllEmployees());
     // we show a notification
     setNotify({
       isOpen: true,
       message: 'Employee Deleted Successfully',
-      type: 'success',
+      type: 'error',
     });
   };
 
@@ -201,7 +211,16 @@ const Employees = () => {
                     </MyActionButton>
                     <MyActionButton
                       color={'secondary'}
-                      onClick={() => handleDeleteEmployee(record.id)}
+                      onClick={() =>
+                        setConfirmDialog({
+                          isOpen: true,
+                          title: 'Are you sure you want to delete this record?',
+                          subtitle: "This operation can't be undone!",
+                          onConfirm: () => {
+                            handleDeleteEmployee(record.id);
+                          },
+                        })
+                      }
                     >
                       <CloseIcon fontSize={'small'} />
                     </MyActionButton>
@@ -222,10 +241,12 @@ const Employees = () => {
         <EmployeeForm addOrEdit={addOrEdit} recordForEdit={recordForEdit} />
       </MyPopup>
       {/* -------------------------------------------------------------------------  the notification popup */}
-      <MyNotificatonPopup
-        notify={notify}
-        setNotify={setNotify}
-      ></MyNotificatonPopup>
+      <MyNotificatonPopup notify={notify} setNotify={setNotify} />
+      {/* ----------------------------------------------------------------------------------  confirm popup */}
+      <MyConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
     </React.Fragment>
   );
 };
