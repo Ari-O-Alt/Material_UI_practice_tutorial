@@ -81,7 +81,6 @@ const EmployeeForm = (props) => {
     event.preventDefault();
     if (validateForm()) {
       // if this function returns true, therefore the form is error free, submit the form
-      window.alert('Hello!');
       addOrEdit(values, resetForm);
     }
   };
